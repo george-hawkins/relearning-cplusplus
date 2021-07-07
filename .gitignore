@@ -1,0 +1,3 @@
+# .idea contains its own .gitignore - for more details on .idea and VCS, see https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+cmake-build-debug/

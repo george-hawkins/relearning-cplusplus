@@ -34,12 +34,12 @@ Copy this script into `~/idea-bin/clion-path`:
 # This file needs to be in the same directory as the `clion` shell script.
 # This shell script is created if you enable shell scripts in Toolbox and specify e.g. `~/idea-bin` as the location for them.
 
-dir=$(dirname "$0")
+dir=$(dirname "$BASH_SOURCE")
 
 root=$(sed -n 's?"\(.*\)/clion.sh".*?\1?p' $dir/clion)
 
 # CMake etc. have a linux/bin directory whereas Clang just has a linux directory.
-PATH=$root:$root/cmake/linux/bin:$root/gdb/linux/bin:$root/lldb/linux/bin:$root/clang/linux
+PATH=$root:$root/cmake/linux/bin:$root/gdb/linux/bin:$root/lldb/linux/bin:$root/clang/linux:$PATH
 ```
 
 As noted in the `#` comments above, you need to enable shell scripts in Toolbox as described.

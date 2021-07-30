@@ -1,9 +1,15 @@
 cmake_minimum_required(VERSION 3.19)
 project(relearning_cplusplus)
 
-# Initially, I set this via _Cmake options_ in the IntelliJ _Settings_.
-# -DCMAKE_CXX_COMPILER=clang++-12
-set(CMAKE_CXX_COMPILER "clang++-12")
+# The compiler is set via _Cmake options_ in the IntelliJ _Settings_.
+# Attempting to set it here results in bad things TM.
+#set(CMAKE_CXX_COMPILER "/usr/bin/clang++-12")
+
+# At the moment libc++ doesn't support `ranges` - there's partial support in 13 (whereas libstdc++ already has full support in 10).
+#if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+#    add_compile_options(-stdlib=libc++)
+#    add_link_options(-stdlib=libc++)   # New command on CMake master, not in 3.12 release
+#endif()
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -69,13 +75,13 @@ FetchContent_MakeAvailable(date)
 
 # ----------------------------------------------------------------------
 
-FetchContent_Declare(cppcoro
-    GIT_REPOSITORY "https://github.com/andreasbuhr/cppcoro"
-    GIT_TAG 7cc9433436fe8f2482138019cfaafce8e1d7a896
-)
-
-FetchContent_MakeAvailable(cppcoro)
-
+# Coroutine support is sort of there in Clang but it doesn't currently play well with GNU's libstdc++.
+#FetchContent_Declare(cppcoro
+#    GIT_REPOSITORY "https://github.com/andreasbuhr/cppcoro"
+#    GIT_TAG 7cc9433436fe8f2482138019cfaafce8e1d7a896
+#)
+#
+#FetchContent_MakeAvailable(cppcoro)
 
 # ----------------------------------------------------------------------
 

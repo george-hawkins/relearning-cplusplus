@@ -61,6 +61,16 @@ To get `clang++` rather than `clang++-12` in your path, just add:
 
     PATH=/usr/lib/llvm-12/bin:$PATH
 
+**Update:** installing `clang++-12` etc. doesn't install Clang's `libc++`, instead you'll end up using GNU's `libstdc++` (which is fine).
+
+In order to use `libc++`, you have to:
+
+    $ sudo apt install libc++-12-dev
+
+This includes all the headers and pulls in `libc++1-12` as a dependency which includes the `.so` libraries etc.
+
+However, see `CMakeLists.txt` - I gave up on `libc++`.
+
 CMake etc.
 ----------
 

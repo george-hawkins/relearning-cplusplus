@@ -7,6 +7,8 @@ Ubuntu 20.04 LTS comes with g++ 9.x. To install g++ 10.x:
 
 And in CLion go to _Settings / Build, Execution, Deployment / CMake_ and set _CMake options_ to `-DCMAKE_CXX_COMPILER=g++-10`.
 
+**Update:** changed to `-DCMAKE_CXX_COMPILER=clang++-12`.
+
 Note: there's various opinions on how you should tell CMake to use a different compiler - see this [SO question](https://stackoverflow.com/q/17275348/245602) for more details.
 
 The `.idea` directory comes with a default `.gitignore` file that ignores `workspace.xml`. Settings like _CMake options_ end up in this file so they do not end up stored in your git repo.
@@ -16,6 +18,48 @@ For more on how to work with even more recent versions of g++ see [`docker-cplus
 TODO:
 
 Look at `clang-tidy` for static analysis.
+
+Disable "Created by foo" in CLion
+---------------------------------
+
+CLion creates new files with a header of the form:
+
+```c++
+//
+// Created by ghawkins on 12.07.21.
+//
+```
+
+To disable this go to _Settings / File and Code Templates"_, switch to the _Includes_ tab and, for the _C File Header_ (which is pulled in by everything C/C++ related) remove the content or wrap it in:
+
+```
+#if (false)
+...
+#end
+```
+
+There already is a `#if` in there that's dependent on `HEADER_COMMENTS` which oddly enough you can't set to false (see [here](https://www.jetbrains.com/help/clion/file-template-variables.html)).
+
+Switch to Clang
+---------------
+
+`clang-12` is the latest version supported by Ubuntu 20.04.
+
+To switch:
+
+    $ sudo apt install clang-tidy-12
+
+This will also pull in the packages `clang-12` and `clang-tools-12`, i.e. pretty much everything you could want.
+
+This installs things like `clang++-12` to `/usr/bin` - if you install multiple versions of Clang, you can switch between them with:
+
+    $ sudo update-alternatives --config clang
+
+This just affects Clang specific executables. It's probably not a good idea to repoint `c++` etc. to Clang versions.
+
+To get `clang++` rather than `clang++-12` in your path, just add:
+
+    PATH=/usr/lib/llvm-12/bin:$PATH
 
 CMake etc.
 ----------
